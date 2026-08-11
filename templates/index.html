@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senhas</title>
+    <style>
+         body{
+            background:#0f172a;
+            color:white;
+            text-align:center;
+            font-family:Arial;
+        }
+
+        .senha{
+            font-size:150px;
+            margin-top:100px;
+        }
+
+        .guiche{
+            font-size:60px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Painel de Atendimento</h1>
+
+    <div class="senha" id="senha">
+        ---
+    </div>
+    <div class="guiche" id="guiche">
+        Guinchê ---
+    </div>
+
+    <script>
+        function atualizar(){
+            fetch('/ultima_senha')
+            .then(r => r.json())
+            .then(d => {
+
+                document.getElementById('senha').innerHTML =
+                    d.senha
+
+                document.getElementById('guiche').innerHTML =
+                    "Guichê " + d.guiche
+
+            })
+        }
+
+        atualizar()
+
+        setInterval(atualizar, 2000)
+
+    </script>
+    
+</body>
+</html>

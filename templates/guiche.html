@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guichê {{ guiche }}</title>
+    <style>
+        body { 
+        font-family: Arial, sans-serif; 
+        text-align: center; 
+        margin-top: 100px; 
+        } 
+
+        h1 { 
+        font-size: 40px; 
+        } 
+
+        button { 
+        padding: 15px 30px; 
+        font-size: 20px; 
+        cursor: pointer; 
+        } 
+
+        #senha { 
+        font-size: 60px; 
+        font-weight: bold; 
+        margin-top: 40px; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Guichê {{ guiche }}</h1>
+
+    <button onclick="chamar()">
+        Chamar Próxima
+    </button>
+
+    <div id="senha"></div>
+
+    <script>
+        function chamar() {
+
+                fetch('/proxima/{{ guiche }}')
+
+                    .then(r => r.json())
+
+                    .then(d => {
+
+                        if (d.erro) {
+                            document.getElementById('senha').innerHTML = d.erro;
+                            return;
+                        }
+
+                        document.getElementById('senha').innerHTML =
+                            d.senha;
+
+                    })
+
+                    .catch(erro => {
+
+                        console.error(erro);
+
+                        document.getElementById('senha').innerHTML =
+                            'Erro ao chamar senha';
+
+                    });
+        }
+
+
+    </script>
+    
+</body>
+</html>

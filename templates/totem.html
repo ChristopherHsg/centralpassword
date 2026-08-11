@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totem</title>
+    <style>
+        body { 
+        font-family: Arial, sans-serif; 
+        text-align: center; 
+        margin-top: 100px; 
+        } 
+
+        h1 { 
+        font-size: 40px; 
+        } 
+
+        button { 
+        padding: 15px 30px; 
+        font-size: 20px; 
+        cursor: pointer; 
+        } 
+
+        #resultado { 
+        font-size: 60px; 
+        font-weight: bold; 
+        margin-top: 40px; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Totem</h1>
+
+    <button onclick="gerar('N')">
+    Senha Normal
+    </button>
+
+    <button onclick="gerar('P')">
+        Senha Preferencial
+    </button>
+
+    <div id="resultado"></div>
+
+    <script>
+
+        function gerar(tipo) {
+
+            fetch('/nova/' + tipo)
+
+                .then(r => r.json())
+
+                .then(d => {
+
+                    if (d.erro) {
+                        document.getElementById('resultado').innerHTML =
+                            d.erro;
+                        return;
+                    }
+
+                    document.getElementById('resultado').innerHTML =
+                        'Senha gerada: ' + d.senha;
+
+                })
+
+                .catch(erro => {
+
+                    console.error(erro);
+
+                    document.getElementById('resultado').innerHTML =
+                        'Erro ao gerar senha';
+
+                });
+
+        }
+
+    </script>
+    
+</body>
+</html>
